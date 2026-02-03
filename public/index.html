@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaLaLand - 夜間配對聊天</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 倒數計時畫面 -->
+        <div id="countdown-screen" class="screen">
+            <div class="countdown-container">
+                <h1>🌙 LaLaLand</h1>
+                <p class="subtitle">夜間配對聊天</p>
+                <div id="countdown-timer">
+                    <div class="time-unit">
+                        <span class="time-value" id="hours">00</span>
+                        <span class="time-label">小時</span>
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-unit">
+                        <span class="time-value" id="minutes">00</span>
+                        <span class="time-label">分鐘</span>
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-unit">
+                        <span class="time-value" id="seconds">00</span>
+                        <span class="time-label">秒</span>
+                    </div>
+                </div>
+                <p class="info-text">每晚 21:00 - 23:59 開放</p>
+            </div>
+        </div>
+
+        <!-- 登入畫面 -->
+        <div id="login-screen" class="screen hidden">
+            <div class="login-container">
+                <h1>🌙 LaLaLand</h1>
+                <p class="subtitle">歡迎來到夜間配對聊天</p>
+                <input type="text" id="username-input" placeholder="請輸入暱稱" maxlength="20">
+                <button id="join-btn" class="primary-btn">開始配對</button>
+            </div>
+        </div>
+
+        <!-- 等待配對畫面 -->
+        <div id="waiting-screen" class="screen hidden">
+            <div class="waiting-container">
+                <div class="spinner"></div>
+                <h2>正在尋找配對對象...</h2>
+                <p>請稍候，我們正在為你配對適合的聊天對象</p>
+            </div>
+        </div>
+
+        <!-- 聊天畫面 -->
+        <div id="chat-screen" class="screen hidden">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2 id="partner-name">聊天對象</h2>
+                    <span class="status online">● 在線</span>
+                </div>
+                <div id="messages" class="messages-container"></div>
+                <div class="message-input-container">
+                    <input type="text" id="message-input" placeholder="輸入訊息..." maxlength="500">
+                    <button id="send-btn" class="send-btn">發送</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
