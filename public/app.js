@@ -23,6 +23,11 @@ const hoursEl = document.getElementById('hours');
 const minutesEl = document.getElementById('minutes');
 const secondsEl = document.getElementById('seconds');
 
+// 獲取台灣時間
+function getTaiwanTime() {
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei' }));
+}
+
 // 顯示特定畫面
 function showScreen(screen) {
     [countdownScreen, loginScreen, waitingScreen, chatScreen].forEach(s => {
@@ -33,7 +38,7 @@ function showScreen(screen) {
 
 // 更新倒數計時
 function updateCountdown(targetTime) {
-    const now = Date.now();
+    const now = getTaiwanTime().getTime();
     const diff = targetTime - now;
     
     if (diff <= 0) {
@@ -53,9 +58,9 @@ function updateCountdown(targetTime) {
 
 // 檢查開放時間
 function checkOpenTime() {
-    const now = new Date();
+    const now = getTaiwanTime();
     const hour = now.getHours();
-    return hour >= 21 || hour < 24;
+    return hour >= 21 && hour <= 23;
 }
 
 // 加入聊天
@@ -217,7 +222,7 @@ if (checkOpenTime()) {
     showScreen(loginScreen);
 } else {
     showScreen(countdownScreen);
-    const now = new Date();
+    const now = getTaiwanTime();
     const nextOpen = new Date(now);
     nextOpen.setHours(21, 0, 0, 0);
     if (now.getHours() >= 21) {

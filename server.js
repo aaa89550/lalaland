@@ -15,16 +15,21 @@ const userMatches = new Map(); // userId -> current matchId
 // 靜態文件服務
 app.use(express.static('public'));
 
+// 獲取台灣時間
+function getTaiwanTime() {
+  return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei' }));
+}
+
 // 檢查是否在開放時間（晚上9點到12點）
 function isOpenTime() {
-  const now = new Date();
+  const now = getTaiwanTime();
   const hour = now.getHours();
   return hour >= 21 && hour <= 23; // 21:00 - 23:59
 }
 
 // 檢查是否在最後10分鐘（23:50-23:59）
 function isLastTenMinutes() {
-  const now = new Date();
+  const now = getTaiwanTime();
   const hour = now.getHours();
   const minute = now.getMinutes();
   return hour === 23 && minute >= 50;
@@ -32,7 +37,7 @@ function isLastTenMinutes() {
 
 // 計算剩餘時間（秒）
 function getTimeRemaining() {
-  const now = new Date();
+  const now = getTaiwanTime();
   const midnight = new Date(now);
   midnight.setHours(24, 0, 0, 0);
   return Math.floor((midnight - now) / 1000);
@@ -59,7 +64,7 @@ io.on('connection', (socket) => {
       // 自動加入配對隊列
       addToQueue(socket);
     } else {
-      const now = new Date();
+      const now = getTaiwanTime();
       const nextOpen = new Date(now);
       nextOpen.setHours(21, 0, 0, 0);
       if (now.getHours() >= 21) {
